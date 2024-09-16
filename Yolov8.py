@@ -1,26 +1,26 @@
 
-# from ultralytics.yolo.utils.plotting import Annotator
+from ultralytics.utils.plotting import Annotator
 from ultralytics import YOLO
 
 
 
 
-# #키 포이트 시각화
-# def draw_keypoints(result, frame):
-#     annotator = Annotator(frame, line_width=1)
-#     for kps in result.keypoints:
-#         kps = kps.data.squeeze()
-#         annotator.kpts(kps)
+#키 포인트 시각화
+def draw_keypoints(result, frame):
+    annotator = Annotator(frame, line_width=1)
+    for kps in result.keypoints:
+        kps = kps.data.squeeze()
+        annotator.kpts(kps)
         
-#         nkps = kps.cpu().numpy()
-#         # nkps[:,2] = 1
-#         # annotator.kpts(nkps)
-#         for idx, (x, y, score) in enumerate(nkps):
-#             if score > 0.5:
-#                 cv2.circle(frame, (int(x), int(y)), 3, (0, 0, 255), cv2.FILLED)
-#                 cv2.putText(frame, str(idx), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 255), 1)
+        nkps = kps.cpu().numpy()
+        # nkps[:,2] = 1
+        # annotator.kpts(nkps)
+        for idx, (x, y, score) in enumerate(nkps):
+            if score > 0.5:
+                cv2.circle(frame, (int(x), int(y)), 3, (0, 0, 255), cv2.FILLED)
+                cv2.putText(frame, str(idx), (int(x), int(y)), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 255), 1)
         
-#     return frame
+    return frame
 
 #모델 추론
 import torch
@@ -44,7 +44,7 @@ def draw_boxes(result, frame):
 
 model=YOLO("../models/yolov8m-pose.pt")
 import cv2
-capture=cv2.VideoCapture("C:/Users/User/Desktop/image/datasets/woman.mp4")
+capture=cv2.VideoCapture("C:/Users/User/Desktop/YOLOV8/datasets/woman.mp4")
 if not capture.isOpened():
     print("Error: Could not open video source.")
 while cv2.waitKey(10)<0:
@@ -58,7 +58,7 @@ while cv2.waitKey(10)<0:
     #     print(f"Frame size: {frame.shape}")
     result=predict(frame)
     frame=draw_boxes(result,frame)
-    # frame = draw_keypoints(result, frame)
+    frame = draw_keypoints(result, frame)
     cv2.imshow("VideoFrame",frame)
     
 capture.release()
