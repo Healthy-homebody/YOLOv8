@@ -44,7 +44,7 @@ def draw_boxes(result, frame):
 
 model=YOLO("../models/yolov8m-pose.pt")
 import cv2
-capture=cv2.VideoCapture("C:/Users/User/Desktop/YOLOV8/datasets/woman.mp4")
+capture=cv2.VideoCapture("./source/video2.mp4")
 if not capture.isOpened():
     print("Error: Could not open video source.")
 while cv2.waitKey(10)<0:
